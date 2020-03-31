@@ -85,6 +85,7 @@ definitions:
         type: "string"
       email:
         type: "string"
+        format: "email"
 
   Connection:
     type: "object"
