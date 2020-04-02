@@ -2,7 +2,6 @@ from http import HTTPStatus
 
 from flask import Blueprint, abort
 from webargs.flaskparser import use_args
-from sqlalchemy.orm.exc import NoResultFound
 
 from connections.models.person import Person
 from connections.models.connection import Connection
