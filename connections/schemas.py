@@ -28,3 +28,10 @@ class ConnectionSchema(BaseModelSchema):
 
     class Meta:
         model = Connection
+
+
+class UpdateConnectionTypeSchema(BaseModelSchema):
+    connection_type = EnumField(ConnectionType)
+
+    class Meta:
+        model = Connection

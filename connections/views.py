@@ -1,11 +1,12 @@
 from http import HTTPStatus
 
-from flask import Blueprint
+from flask import Blueprint, abort
 from webargs.flaskparser import use_args
+from sqlalchemy.orm.exc import NoResultFound
 
 from connections.models.person import Person
 from connections.models.connection import Connection
-from connections.schemas import ConnectionSchema, PersonSchema
+from connections.schemas import ConnectionSchema, UpdateConnectionTypeSchema, PersonSchema
 
 blueprint = Blueprint('connections', __name__)
 
@@ -36,3 +37,14 @@ def get_connections():
 def create_connection(connection):
     connection.save()
     return ConnectionSchema().jsonify(connection), HTTPStatus.CREATED
+
+
+@blueprint.route('/connections/<connection_id>', methods=['PATCH'])
+@use_args(UpdateConnectionTypeSchema(), locations=('json',))
+def update_connection_type(request, connection_id):
+    connection = Connection.query.get(connection_id)
+    if not connection:
+        abort(404)
+
+    connection.connection_type = request.connection_type
+    return UpdateConnectionTypeSchema().jsonify(connection), HTTPStatus.OK
