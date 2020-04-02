@@ -53,6 +53,14 @@ paths:
       operationId: "getMutualFriends"
       produces:
       - "application/json"
+      parameters:
+      - in: "query"
+        name: "target_id"
+        description: "The ID of the person to whom you are checking for mutual friend connections"
+        required: true
+        schema:
+          type: "integer"
+          minimum: 1
       responses:        
         200:
           description: "successful operation"
