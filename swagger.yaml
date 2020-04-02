@@ -101,6 +101,17 @@ paths:
         required: true
         schema:
           $ref: "#/definitions/Connection/properties/connection_type"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "object"
+            items:
+              $ref: "#/definitions/Connection"
+        400:
+          description: "Invalid input"
+        404:
+          description: "Not found"
 
 definitions:
   Person:
