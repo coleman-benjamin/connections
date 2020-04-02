@@ -11,7 +11,6 @@ EXPECTED_FIELDS = [
 ]
 
 
-@pytest.mark.xfail
 def test_get_mutual_friends(db, testapp):
     instance = PersonFactory()
     target = PersonFactory()
@@ -41,7 +40,6 @@ def test_get_mutual_friends(db, testapp):
             assert field in person
 
 
-@pytest.mark.xfail
 def test_get_mutual_friends_correct_data(db, testapp):
     instance = PersonFactory()
     target = PersonFactory()
@@ -72,7 +70,7 @@ def test_get_mutual_friends_correct_data(db, testapp):
     assert res_b.status_code == HTTPStatus.OK
 
     # confirm that both calls return the same values
-    instance_f_ids = [f.id for f in res_a.json]
-    target_f_ids = [f.id for f in res_b.json]
+    instance_f_ids = [f['id'] for f in res_a.json]
+    target_f_ids = [f['id'] for f in res_b.json]
 
     assert set(instance_f_ids) == set(target_f_ids)
