@@ -23,5 +23,8 @@ class ConnectionSchema(BaseModelSchema):
     to_person_id = fields.Integer()
     connection_type = EnumField(ConnectionType)
 
+    from_person = fields.Nested(PersonSchema)
+    to_person = fields.Nested(PersonSchema)
+
     class Meta:
         model = Connection
