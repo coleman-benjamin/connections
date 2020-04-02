@@ -48,6 +48,20 @@ paths:
         400:
           description: "Invalid input"
   /connections:
+    get:
+      summary: "Get list of connections"
+      operationId: "getConnections"
+      produces:
+      - "application/json"
+      responses:        
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Connection"
+        400:
+          description: "Invalid input"
     post:
       summary: "Create a new connection"
       description: ""
@@ -72,6 +86,33 @@ paths:
               $ref: "#/definitions/Connection"
         400:
           description: "Invalid input"
+  /connections/{connection_id}:
+    patch:
+      summary: "Update a connection's ConnectionType"
+      operationId: "updateConnectionType"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Connection object containing connection_type field to be updated"
+        required: true
+        schema:
+          $ref: "#/definitions/Connection/properties/connection_type"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "object"
+            items:
+              $ref: "#/definitions/Connection"
+        400:
+          description: "Invalid input"
+        404:
+          description: "Not found"
+
 definitions:
   Person:
     type: "object"
@@ -101,6 +142,10 @@ definitions:
         type: "integer"
         format: "int64"
         description: "To Person"
+      from_person:
+        $ref: "#/definitions/Person"
+      to_person:
+        $ref: "#/definitions/Person"
       connection_type:
         type: "string"
         description: "Connection Type"
