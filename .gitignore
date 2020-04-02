@@ -7,4 +7,5 @@
 .env
 .python-version
 .pytest_cache/
+.vscode/
 reports/
