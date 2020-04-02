@@ -86,6 +86,22 @@ paths:
               $ref: "#/definitions/Connection"
         400:
           description: "Invalid input"
+  /connections/{connection_id}:
+    patch:
+      summary: "Update a connection's ConnectionType"
+      operationId: "updateConnectionType"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Connection object containing connection_type field to be updated"
+        required: true
+        schema:
+          $ref: "#/definitions/Connection/properties/connection_type"
+
 definitions:
   Person:
     type: "object"
