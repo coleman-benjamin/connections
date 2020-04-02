@@ -47,6 +47,23 @@ paths:
               $ref: "#/definitions/Person"
         400:
           description: "Invalid input"
+  /people/{person_id}/mutual_friends:
+    get:
+      summary: "Get list of a person's mutual friends"
+      operationId: "getMutualFriends"
+      produces:
+      - "application/json"
+      responses:        
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Person"
+        400:
+          description: "Invalid input"
+        404:
+          description: "Not found"
   /connections:
     get:
       summary: "Get list of connections"
