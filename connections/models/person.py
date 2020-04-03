@@ -1,6 +1,6 @@
 from connections.database import CreatedUpdatedMixin, CRUDMixin, db, Model
 
-from connections.models.connection import ConnectionType
+from connections.models.connection import ConnectionType, Connection
 
 
 class Person(Model, CRUDMixin, CreatedUpdatedMixin):
@@ -16,7 +16,7 @@ class Person(Model, CRUDMixin, CreatedUpdatedMixin):
         self_friends = self.connections.filter_by(connection_type=ConnectionType.friend)
         other_friends = Person.connections.filter_by(connection_type=ConnectionType.friend)
 
-        mutual_connections = self_friends.union(other_friends)
-        result = set(connection.to_person for connection in mutual_connections)
+        mutual_connections = self_friends.union(other_friends).group_by(Connection.to_person_id)
+        result = [connection.to_person for connection in mutual_connections]
 
         return result
