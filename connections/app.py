@@ -66,6 +66,5 @@ def register_errorhandlers(app):
 
     @app.errorhandler(NoResultFound)
     def handle_integrity_errors(error):
-        print(error)
         return (jsonify({'description': f'Database record not found'}),
                 HTTPStatus.NOT_FOUND)
