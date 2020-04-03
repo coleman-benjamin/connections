@@ -3,6 +3,7 @@ from http import HTTPStatus
 from flask import Flask, jsonify
 from marshmallow.exceptions import ValidationError
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm.exc import NoResultFound
 
 from connections.config import Config
 from connections.extensions import cors, db, ma, migrate
@@ -62,3 +63,8 @@ def register_errorhandlers(app):
     def handle_integrity_errors(error):
         return (jsonify({'description': f'Database integrity error: {error.orig.args[1]}'}),
                 HTTPStatus.BAD_REQUEST)
+
+    @app.errorhandler(NoResultFound)
+    def handle_integrity_errors(error):
+        return (jsonify({'description': f'Database record not found'}),
+                HTTPStatus.NOT_FOUND)
