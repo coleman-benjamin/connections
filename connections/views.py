@@ -21,13 +21,10 @@ def get_people():
 @blueprint.route('/people/<person_id>/mutual_friends', methods=['GET'])
 @use_args({'target_id': fields.Integer(required=True)})
 def get_mutual_friends(args, person_id):
+    personA = Person.query.filter(Person.id == person_id).one()
+    personB = Person.query.filter(Person.id == args['target_id']).one()
+
     people_schema = PersonSchema(many=True)
-    personA = Person.query.get(person_id)
-    personB = Person.query.get(args['target_id'])
-
-    if not personA or not personB:
-        abort(404)
-
     return people_schema.jsonify(personA.mutual_friends(personB)), HTTPStatus.OK
 
 
@@ -55,9 +52,6 @@ def create_connection(connection):
 @blueprint.route('/connections/<connection_id>', methods=['PATCH'])
 @use_args(UpdateConnectionTypeSchema(), locations=('json',))
 def update_connection_type(request, connection_id):
-    connection = Connection.query.get(connection_id)
-    if not connection:
-        abort(404)
-
+    connection = Connection.query.filter(Connection.id == connection_id).one()
     connection.connection_type = request.connection_type
     return UpdateConnectionTypeSchema().jsonify(connection), HTTPStatus.OK
